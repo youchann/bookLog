@@ -1,0 +1,13 @@
+<!doctype html>
+<title>bookLog</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<div class=page>
+  <h1>bookLog</h1>
+  {% if session.user %}
+    <a href="{{ url_for('logout') }}">logout</a>
+    <a href="{{ url_for('show_entries') }}">entries</a>
+  {% else %}
+    <a href="{{ url_for('login') }}">login</a>
+  {% endif %}
+  {% block body %}{% endblock %}
+</div>
