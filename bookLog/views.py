@@ -2,10 +2,11 @@ from functools import wraps
 from flask import request, redirect, url_for, render_template, flash, abort, \
         jsonify, session, g
 from bookLog import app
-from bookLog.config import fireConfig
+import bookLog.config as config
 import pyrebase
-import firebase_admin
-# from bookLog.models import Entry
+
+firebase = pyrebase.initialize_app(config.FIREBASE_CONFIG)
+db = firebase.database()
 
 # ログインしているかを判断するデコレータ
 def login_required(f):
@@ -25,14 +26,20 @@ def load_user():
     if user is None:
         g.user = None
     else:
-        # g.user = User.query.get(session['user'])
         g.user = user
 
 
 @app.route('/')
 @login_required
 def show_entries():
-    # entries = Entry.query.order_by(Entry.id.desc()).all()
+
+    # ログインユーザーのuidを代入
+    uid = g.user.get('localId')
+
+    data = db.child("users_books").get(g.user['idToken'])
+    print(data.val())
+    print(uid)
+
     return render_template('show_entries.html')
 #
 # @app.route('/add', methods=['POST'])
@@ -70,11 +77,8 @@ def show_entries():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-
-    firebase = pyrebase.initialize_app(fireConfig)
+    # firebase = pyrebase.initialize_app(FIREBASE_CONFIG)
     auth = firebase.auth()
-    # user = auth.sign_in_with_email_and_password(email, password)
-    # session[user] = user
 
     # ログイン処理
     if request.method == 'POST':
@@ -84,14 +88,12 @@ def login():
             user = auth.sign_in_with_email_and_password(email, password)
             flash('You were logged in')
             session['user'] = user
-            print(session['user'])
-            return redirect(url_for('show_entries'))
+            return redirect(url_for('show_entries', firebase=firebase))
         except:
+            print("ses")
             flash('Invalid email or password')
 
     return render_template('login.html')
-
-
 
 @app.route('/logout')
 def logout():
