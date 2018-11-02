@@ -5,15 +5,25 @@
   <ul>
     {% for x in bookId %}
         <li class="BookThumbnail"></li>
-        <div class="ModalArea">
-          <ul>
-            <li class="BookTitle"></li>
-            <li class="BookAuther"></li>
-            <li class="PublishedDate"></li>
-            <li class="BookDescription"></li>
-          </ul>
-          <button>削除する</button>
-        </div>
+        <!-- モーダルエリアここから -->
+        <section class="modalArea">
+          <div class="modalBg"></div>
+          <div class="modalWrapper">
+            <div class="modalContents">
+              <ul>
+                <li class="BookTitle"></li>
+                <li class="BookAuther"></li>
+                <li class="PublishedDate"></li>
+                <li class="BookDescription"></li>
+              </ul>
+              <button>削除する</button>
+            </div>
+            <div class="closeModal">
+              ×
+            </div>
+          </div>
+        </section>
+        <!-- モーダルエリアここまで -->
     {% endfor %}
   </ul>
 
