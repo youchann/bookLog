@@ -1,4 +1,103 @@
 {% extends "layout.html" %}
 {% block body %}
-  <h2>show_entries.html</h2>
+  <h2 class="dotnet">show_entries.html</h2>
+
+  <ul>
+    {% for x in bookId %}
+        <li class="BookThumbnail"></li>
+        <div class="ModalArea">
+          <ul>
+            <li class="BookTitle"></li>
+            <li class="BookAuther"></li>
+            <li class="PublishedDate"></li>
+            <li class="BookDescription"></li>
+          </ul>
+          <button>削除する</button>
+        </div>
+    {% endfor %}
+  </ul>
+
+
+
+  <!-- ここからJavaScript -->
+  <script>
+    
+    var bookList = [];
+    var bookId = {{ bookId|tojson }};//flaskから引数を取得
+    function addNoneData(classname, eqnum){
+      $(classname).eq(eqnum).text("データがありません");
+    };
+    
+    //APIからデータの取得
+    for (let i = 0; i < bookId.length; i++){
+      var id = bookId[i];
+      var url = 'https://www.googleapis.com/books/v1/volumes?q=id:' + id;
+      var isFirstLoop = true;
+
+      //Google Books APIの利用
+      $.getJSON(url, function(data) {
+        //サムネイル画像の取得
+        if("imageLinks" in data.items[0].volumeInfo == true){
+          $(".BookThumbnail").eq(i).html('<img src=\"' + data.items[0].volumeInfo.imageLinks.smallThumbnail + '\" />');
+        } else {
+          $(".BookThumbnail").eq(i).html('<img src=\"' + "/static/Thumbnail_Not_Found.png" + '\" />');
+        }
+
+        //題名の取得
+        $(".BookTitle").eq(i).text(data.items[0].volumeInfo.title);
+
+        //著者の取得
+        if(data.items[0].volumeInfo.authors[0] != ""){
+          data.items[0].volumeInfo.authors.forEach(function(val, j){
+            if(isFirstLoop){
+              $(".BookAuther").eq(i).text(data.items[0].volumeInfo.authors[j]);
+              isFirstLoop = false;
+            } else {
+              $(".BookAuther").eq(i).append("," + data.items[0].volumeInfo.authors[j]);
+            }
+          });
+        } else {
+          addNoneData(".BookAuther", i);
+        }
+
+        //出版日の取得
+        if(data.items[0].volumeInfo.publishedDate != ""){
+          $(".PublishedDate").eq(i).text(data.items[0].volumeInfo.publishedDate);
+        } else {
+          addNoneData(".PublishedDate", i);
+        }
+
+        //あらすじの取得
+        if(data.items[0].volumeInfo.description != ""){
+          $(".BookDescription").eq(i).text(data.items[0].volumeInfo.description);
+        } else {
+          addNoneData(".BookDescription", i);
+        }
+  
+
+        //try {
+          // 該当書籍が存在した場合、JSONから値を取得して入力項目のデータを取得する
+
+          //$("#BookTitle").text(data.items[0].volumeInfo.title);
+          //$("#isbn13").text(data.items[0].volumeInfo.industryIdentifiers[0].identifier);
+          //$("#isbn10").text(data.items[0].volumeInfo.industryIdentifiers[1].identifier);
+          //$("#BookAuthor").text(data.items[0].volumeInfo.authors[0]);
+          //$("#PublishedDate").text(data.items[0].volumeInfo.publishedDate);
+          //$("#BookDescription").text(data.items[0].volumeInfo.description);
+          //$("#BookDescription").text(data.items[0].volumeInfo.publisher);
+        //  $(".BookThumbnail").eq(i).html('<img src=\"' + data.items[0].volumeInfo.imageLinks.smallThumbnail + '\" />');
+        //} catch( e ) {
+         // $(".BookThumbnail").eq(i).html('<img src=\"' + "/static/Thumbnail_Not_Found.png" + '\" />');
+        //}
+        //$(".BookThumbnail").eq(i).html('<img src=\"' + data.items[0].volumeInfo.imageLinks.smallThumbnail + '\" />');
+
+
+
+      });
+
+
+    }
+  </script>
+  <!-- JavaScriptここまで -->
+
 {% endblock %}

@@ -1,12 +1,15 @@
 from functools import wraps
 from flask import request, redirect, url_for, render_template, flash, abort, \
         jsonify, session, g
+import requests
 from bookLog import app
 import bookLog.config as config
 import pyrebase
 
 firebase = pyrebase.initialize_app(config.FIREBASE_CONFIG)
+url = config.google_books_api_url
 db = firebase.database()
+
 
 # ログインしているかを判断するデコレータ
 def login_required(f):
@@ -33,14 +36,19 @@ def load_user():
 @login_required
 def show_entries():
 
+    bookId = []
+
     # ログインユーザーのuidを代入
     uid = g.user.get('localId')
 
-    data = db.child("users_books").get(g.user['idToken'])
-    print(data.val())
-    print(uid)
+    # data = db.child("users_books").get(g.user['idToken'])
+    userData = db.child("users_books").child(uid).get(g.user['idToken'])
+    dataList = userData.val()
+    del dataList[0] # 最初のNone要素を削除
+    for data in dataList:
+        bookId.append(data['book_id'])
 
-    return render_template('show_entries.html')
+    return render_template('show_entries.html',bookId=bookId) 
 #
 # @app.route('/add', methods=['POST'])
 # def add_entry():
@@ -90,7 +98,6 @@ def login():
             session['user'] = user
             return redirect(url_for('show_entries', firebase=firebase))
         except:
-            print("ses")
             flash('Invalid email or password')
 
     return render_template('login.html')

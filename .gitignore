@@ -2,3 +2,4 @@ samples/
 myfirebase.json
 bookLog/config.py
 __pycache__/
+.vscode
