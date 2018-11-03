@@ -35,9 +35,7 @@ def load_user():
 @app.route('/')
 @login_required
 def show_entries():
-
     bookId = []
-
     # ログインユーザーのuidを代入
     uid = g.user.get('localId')
 
@@ -49,6 +47,12 @@ def show_entries():
         bookId.append(data['book_id'])
 
     return render_template('show_entries.html',bookId=bookId) 
+
+@app.route('/search')
+@login_required
+def search_books():
+    
+    return render_template('search_books.html') 
 #
 # @app.route('/add', methods=['POST'])
 # def add_entry():

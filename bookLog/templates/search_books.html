@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<h2>search_books.html</h2>
+
+<form id="searchForm">
+  <div class="input-field">
+    <input type="search" id="searchWord">
+    <label for="search">Search Books</label>
+  </div>
+  <button class="btn red">Search Books</button>
+</form>
+
+<ul id="result">
+
+</ul>
+
+<script src="/static/search_books.js"></script>
+{% endblock %}

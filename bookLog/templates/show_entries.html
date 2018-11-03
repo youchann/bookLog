@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
   <h2>show_entries.html</h2>
+  <button onclick="location.href='{{ url_for('search_books') }}'">本を追加する</button>
 
   <ul>
     {% for x in bookId %}
@@ -30,7 +31,7 @@
 
 
   <!-- ここからJavaScript -->
-  <script> var bookId = {{ bookId|tojson }};//flaskから引数を取得</script>
+  <script> var bookId = {{ bookId|tojson }};</script><!--flaskから引数を取得-->
   <script src="/static/show_entries.js"></script>
 
 {% endblock %}
