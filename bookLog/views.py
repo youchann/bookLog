@@ -51,21 +51,15 @@ def show_entries():
 @app.route('/search')
 @login_required
 def search_books():
-    
-    return render_template('search_books.html') 
-#
-# @app.route('/add', methods=['POST'])
-# def add_entry():
-#     entry = Entry(
-#             title=request.form['title'],
-#             text=request.form['text']
-#             )
-#     db.session.add(entry)
-#     db.session.commit()
-#     flash('New entry was successfully posted')
-#     return redirect(url_for('show_entries'))
-#
-#
+
+    return render_template('search_books.html')
+
+@app.route('/add/<string:book_id>')
+def add_entry(book_id):
+    bookId = book_id
+    return render_template('test.html', bookId=bookId)
+
+
 # @app.route('/users/')
 # def user_list():
 #     return 'list users'
