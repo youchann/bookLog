@@ -1,4 +1,5 @@
 from functools import wraps
+from collections import OrderedDict
 from flask import request, redirect, url_for, render_template, flash, abort, \
         jsonify, session, g
 import requests
@@ -36,15 +37,16 @@ def load_user():
 @login_required
 def show_entries():
     bookId = []
-    # ログインユーザーのuidを代入
+    # ログインユーザーのuser_idを代入
     uid = g.user.get('localId')
 
-    # data = db.child("users_books").get(g.user['idToken'])
     userData = db.child("users_books").child(uid).get(g.user['idToken'])
     dataList = userData.val()
-    del dataList[0] # 最初のNone要素を削除
-    for data in dataList:
-        bookId.append(data['book_id'])
+    for key, val in dataList.items():
+        bookId.append(val['book_id'])
+        if val['book_id'] == 'ae5EIftehVAC':
+            db.child("users_books").child(uid).child(key).remove(g.user['idToken'])
+    
 
     return render_template('show_entries.html',bookId=bookId) 
 
@@ -56,9 +58,26 @@ def search_books():
 
 @app.route('/add/<string:book_id>')
 def add_entry(book_id):
-    bookId = book_id
-    return render_template('test.html', bookId=bookId)
+    # ログインユーザーのuser_idを代入
+    uid = g.user.get('localId')
 
+    # データベースの更新
+    db.child("users_books").child(uid).push({'book_id': book_id}, g.user['idToken'])
+
+    return redirect(url_for('show_entries'))
+
+@app.route('/delete/<string:book_id>')
+def delete_entry(book_id):
+    # ログインユーザーのuser_idを代入
+    uid = g.user.get('localId')
+
+    # データベースの更新
+    userData = db.child("users_books").child(uid).get(g.user['idToken'])
+    dataList = userData.val()
+    for key, val in dataList.items():
+        if val['book_id'] == book_id:
+            db.child("users_books").child(uid).child(key).remove(g.user['idToken'])
+    return redirect(url_for('show_entries'))
 
 # @app.route('/users/')
 # def user_list():
