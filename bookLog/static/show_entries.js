@@ -11,6 +11,17 @@ $(function () {
 });
 
 
+//削除ボタン
+$(function () {
+    let clicked_index;
+    $('.deleteButton').click(function(){
+        clicked_index = $('.deleteButton').index(this);
+        delete_book_id = bookId[clicked_index];
+        window.location.href = '/delete/' + delete_book_id;
+    });
+});
+
+
 //該当データがない場合の処理
 function addNoneData(classname, eqnum){
     $(classname).eq(eqnum).text("データがありません");
@@ -62,4 +73,7 @@ for (let i = 0; i < bookId.length; i++){
             addNoneData(".BookDescription", i);
         }
     });
+
+
+
 }

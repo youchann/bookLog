@@ -42,11 +42,9 @@ def show_entries():
 
     userData = db.child("users_books").child(uid).get(g.user['idToken'])
     dataList = userData.val()
-    for key, val in dataList.items():
-        bookId.append(val['book_id'])
-        if val['book_id'] == 'ae5EIftehVAC':
-            db.child("users_books").child(uid).child(key).remove(g.user['idToken'])
-    
+    if dataList != None:
+        for key, val in dataList.items():
+            bookId.append(val['book_id'])
 
     return render_template('show_entries.html',bookId=bookId) 
 
