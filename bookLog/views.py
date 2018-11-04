@@ -55,6 +55,7 @@ def search_books():
     return render_template('search_books.html')
 
 @app.route('/add/<string:book_id>')
+@login_required
 def add_entry(book_id):
     # ログインユーザーのuser_idを代入
     uid = g.user.get('localId')
@@ -65,6 +66,7 @@ def add_entry(book_id):
     return redirect(url_for('show_entries'))
 
 @app.route('/delete/<string:book_id>')
+@login_required
 def delete_entry(book_id):
     # ログインユーザーのuser_idを代入
     uid = g.user.get('localId')
@@ -101,24 +103,6 @@ def create_user():
 
 
     return render_template('create_user.html')
-
-
-# @app.route('/users/')
-# def user_list():
-#     return 'list users'
-#
-# @app.route('/users/<int:user>/')
-# def user_detail(user):
-#     return 'detail user ' + str(user)
-#
-# @app.route('/users/<int:user>/edit/', methods=['GET', 'POST'])
-# def user_edit(user):
-#     return 'edit user ' + str(user)
-#
-# @app.route('/users/<int:user>/delete/', methods=['DELETE'])
-# def user_delete(user):
-#     return NotImplementedError('DELETE')
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
