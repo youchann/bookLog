@@ -3,6 +3,7 @@ from collections import OrderedDict
 from flask import request, redirect, url_for, render_template, flash, abort, \
         jsonify, session, g
 import requests
+import lepl.apps.rfc3696
 from bookLog import app
 import bookLog.config as config
 import pyrebase
@@ -17,7 +18,6 @@ def login_required(f):
     @wraps(f)
     def decorated_view(*args, **kwargs):
         if g.user is None:
-            # return redirect(url_for('login', next=request.path))
             return redirect(url_for('login'))
         return f(*args, **kwargs)
     return decorated_view
@@ -77,6 +77,32 @@ def delete_entry(book_id):
             db.child("users_books").child(uid).child(key).remove(g.user['idToken'])
     return redirect(url_for('show_entries'))
 
+@app.route('/create/', methods=['GET', 'POST'])
+def create_user():
+    auth = firebase.auth()
+    email_validator = lepl.apps.rfc3696.Email()
+
+    # ユーザー作成処理
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        #バリデーションを行う
+        if email_validator(email) and len(password) >= 6:
+            try:
+                user = auth.create_user_with_email_and_password(email, password)
+                session['user'] = user
+
+                flash('Welcome to bookLog!!')
+                return redirect(url_for('show_entries', firebase=firebase))
+            except:
+                flash('Error')
+        else:
+            flash('Please fill correctly the input form')
+
+
+    return render_template('create_user.html')
+
+
 # @app.route('/users/')
 # def user_list():
 #     return 'list users'
@@ -89,10 +115,6 @@ def delete_entry(book_id):
 # def user_edit(user):
 #     return 'edit user ' + str(user)
 #
-# @app.route('/users/create/', methods=['GET', 'POST'])
-# def user_create():
-#     return 'create a new user'
-#
 # @app.route('/users/<int:user>/delete/', methods=['DELETE'])
 # def user_delete(user):
 #     return NotImplementedError('DELETE')
@@ -100,7 +122,6 @@ def delete_entry(book_id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # firebase = pyrebase.initialize_app(FIREBASE_CONFIG)
     auth = firebase.auth()
 
     # ログイン処理
