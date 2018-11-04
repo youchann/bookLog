@@ -27,10 +27,11 @@ def login_required(f):
 @app.before_request
 def load_user():
     user = session.get('user')
+    auth = firebase.auth()
     if user is None:
         g.user = None
     else:
-        g.user = user
+        g.user = auth.refresh(user['refreshToken'])
 
 
 @app.route('/')
