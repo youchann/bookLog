@@ -39,10 +39,13 @@ def load_user():
 def show_entries():
     bookId = []
     # ログインユーザーのuser_idを代入
-    uid = g.user.get('localId')
+    uid = g.user.get('userId')
 
-    userData = db.child("users_books").child(uid).get(g.user['idToken'])
+    # ユーザーIDに対応するデータを取得
+    userData = db.child('users_books').child(uid).get(g.user['idToken'])
     dataList = userData.val()
+
+    # 取得したデータを配列に挿入
     if dataList != None:
         for key, val in dataList.items():
             bookId.append(val['book_id'])
@@ -59,10 +62,10 @@ def search_books():
 @login_required
 def add_entry(book_id):
     # ログインユーザーのuser_idを代入
-    uid = g.user.get('localId')
+    uid = g.user.get('userId')
 
     # データベースの更新
-    db.child("users_books").child(uid).push({'book_id': book_id}, g.user['idToken'])
+    db.child('users_books').child(uid).push({'book_id': book_id}, g.user['idToken'])
 
     return redirect(url_for('show_entries'))
 
@@ -70,14 +73,14 @@ def add_entry(book_id):
 @login_required
 def delete_entry(book_id):
     # ログインユーザーのuser_idを代入
-    uid = g.user.get('localId')
-
+    uid = g.user.get('userId')
     # データベースの更新
-    userData = db.child("users_books").child(uid).get(g.user['idToken'])
+    userData = db.child('users_books').child(uid).get(g.user['idToken'])
     dataList = userData.val()
     for key, val in dataList.items():
         if val['book_id'] == book_id:
-            db.child("users_books").child(uid).child(key).remove(g.user['idToken'])
+            db.child('users_books').child(uid).child(key).remove(g.user['idToken'])
+            break
     return redirect(url_for('show_entries'))
 
 @app.route('/create/', methods=['GET', 'POST'])
