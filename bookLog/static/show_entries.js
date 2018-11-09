@@ -38,8 +38,10 @@ for (let i = 0; i < bookId.length; i++){
         //サムネイル画像の取得
         if("imageLinks" in data.items[0].volumeInfo == true){
             $(".BookThumbnail").eq(i).html('<img src=\"' + data.items[0].volumeInfo.imageLinks.smallThumbnail + '\" />');
+            $(".DetailThumbnail").eq(i).html('<img src=\"' + data.items[0].volumeInfo.imageLinks.smallThumbnail + '\" />');
         } else {
             $(".BookThumbnail").eq(i).html('<img src=\"' + "/static/Thumbnail_Not_Found.png" + '\" />');
+            $(".DetailThumbnail").eq(i).html('<img src=\"' + "/static/Thumbnail_Not_Found.png" + '\" />');
         }
 
         //題名の取得

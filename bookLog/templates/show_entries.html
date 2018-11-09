@@ -1,23 +1,32 @@
 {% extends "layout.html" %}
 {% block body %}
-  <h2>show_entries.html</h2>
-  <button onclick="location.href='{{ url_for('search_books') }}'">本を追加する</button>
+  <header class="masthead text-center text-white">
+    <div class="masthead-content">
+      <div class="container">
+        <h1 class="masthead-heading mb-10">Enjoy Reading!</h1>
+        <h2 class="masthead-subheading mb-1">It is going to take you to the wonderful world.</h2>
+        <a onclick="location.href='{{ url_for('search_books') }}'" class="btn btn-primary btn-xl rounded-pill mt-3 mb-3">Add Your Book</a>
+      </div>
+    </div>
+  </header>
 
-  <ul>
+  <div class="shelf-wrapper">
     {% for x in bookId %}
-        <li class="BookThumbnail"></li>
+      <div class="item-area">
+        <div class="BookThumbnail"></div>
         <!-- モーダルエリアここから -->
         <section class="modalArea">
           <div class="modalBg"></div>
           <div class="modalWrapper">
             <div class="modalContents">
-              <ul>
+              <div class="DetailThumbnail"></div>
+              <ul class="bookDetail">
                 <li class="BookTitle"></li>
                 <li class="BookAuther"></li>
                 <li class="PublishedDate"></li>
                 <li class="BookDescription"></li>
               </ul>
-              <button class="deleteButton">削除する</button>
+              <button class="deleteButton btn btn-danger">削除する</button>
             </div>
             <div class="closeModal">
               ×
@@ -25,8 +34,9 @@
           </div>
         </section>
         <!-- モーダルエリアここまで -->
+      </div>
     {% endfor %}
-  </ul>
+  </div>
 
 
 

@@ -1,5 +1,38 @@
 @charset "utf-8";
 
+header {
+    background-image: url(header.jpg);
+    background-size:cover;
+ }
+
+.shelf-wrapper {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    padding: 40px 0 0 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-image: url(bookshelf.jpg);
+    -moz-background-size:100% 235px;
+    background-size:100% 235px;
+    background-repeat: repeat-y;
+  }
+
+.shelf-wrapper .item-area {
+    margin: auto;
+  }
+
+.shelf-wrapper img {
+    width: 130px;
+    height: 190px;
+    margin-bottom: 45px;
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+
+
 .BookThumbnail {
     cursor : pointer;
   }
@@ -32,7 +65,7 @@
     left: 50%;
     transform:translate(-50%,-50%);
     width: 70%;
-    max-width: 500px;
+    max-width: 1000px;
     padding: 10px 30px;
     background-color: #fff;
   }
@@ -43,3 +76,50 @@
     right: 1rem;
     cursor: pointer;
   }
+
+  @media screen and (min-width: 1300px) {
+    /*　画面サイズ 1300pxから適用　*/
+    /* .modalContents .DetailThumbnail {
+      display: inline-block;
+      margin-top: none;
+    }
+  
+    .modalContents .bookDetail {
+      display: inline-block;
+      margin-top: 40px;
+      list-style: none;
+      padding-left: none;
+      line-height: 40px;
+      width: 70%;
+    }
+  
+    .modalContents .deleteButton {
+      display: block;
+      margin: 0 10px 10px auto;
+    } */
+  }
+
+  /* @media screen and (max-width: 1299px) {  */
+    /*　画面サイズ 1299px以下から適用　*/
+    .modalContents .DetailThumbnail {
+      margin: 30px auto auto auto;
+    }
+
+    .modalContents .DetailThumbnail img {
+      display: block;
+      margin: auto;
+    }
+  
+    .modalContents .bookDetail {
+      margin-top: 40px;
+      list-style: none;
+      line-height: 40px;
+    }
+  
+    .modalContents .deleteButton {
+      display: block;
+      margin: 0 10px 10px auto;
+    }
+
+  /* } */
+
