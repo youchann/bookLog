@@ -11,7 +11,7 @@ import pyrebase
 
 FIREBASE_CONFIG = os.environ["FIREBASE_CONFIG"]
 
-firebase = pyrebase.initialize_app(config.FIREBASE_CONFIG)
+firebase = pyrebase.initialize_app(FIREBASE_CONFIG)
 url = config.google_books_api_url
 db = firebase.database()
 
