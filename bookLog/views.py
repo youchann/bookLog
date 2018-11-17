@@ -2,11 +2,14 @@ from functools import wraps
 from collections import OrderedDict
 from flask import request, redirect, url_for, render_template, flash, abort, \
         jsonify, session, g
+import os
 import requests
 import lepl.apps.rfc3696
 from bookLog import app
 import bookLog.config as config
 import pyrebase
+
+FIREBASE_CONFIG = os.environ["FIREBASE_CONFIG"]
 
 firebase = pyrebase.initialize_app(config.FIREBASE_CONFIG)
 url = config.google_books_api_url
