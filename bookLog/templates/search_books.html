@@ -1,19 +1,29 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<h2>search_books.html</h2>
-
-<form id="searchForm">
-  <div class="input-field">
-    <input type="search" id="searchWord">
-    <label for="search">Search Books</label>
+<div class="container">
+  <div class="row">
+    <img src="{{ url_for('static', filename='search.png') }}" class="img-fluid mx-auto d-block my-3">
   </div>
-  <button>Search Books</button>
+</div>
+
+<form id="searchForm" class="form-inline mx-auto my-5" style="width: 330px;">
+  <div class="input-field form-group">
+    <input type="search" id="searchWord" placeholder="Add Book Name" class="form-control">
+  </div>
+  <button class="btn btn-primary">Search Books</button>
 </form>
 
-<ul id="result">
+<!-- <div class="input-group">
+	<input type="text" class="form-control col-xs-4" placeholder="書籍名">
+	<span class="input-group-btn">
+		<button type="button" class="btn btn-info">検索</button>
+	</span>
+</div> -->
 
-</ul>
+<div id="result" class="container">
+  <div id="row" class="row"></div>
+</div>
 
 <script src="/static/search_books.js"></script>
 {% endblock %}

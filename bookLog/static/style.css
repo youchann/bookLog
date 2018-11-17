@@ -5,6 +5,14 @@ header {
     background-size:cover;
  }
 
+.btn {
+    cursor: pointer;
+  }
+
+.navbar-brand {
+    margin-left: 20px;
+  }
+
 .shelf-wrapper {
     display: -webkit-flex;
     display: -moz-flex;
@@ -14,6 +22,7 @@ header {
     padding: 40px 0 0 0;
     flex-direction: row;
     flex-wrap: wrap;
+    flex-shrink: 0;
     background-image: url(bookshelf.jpg);
     -moz-background-size:100% 235px;
     background-size:100% 235px;
@@ -53,73 +62,106 @@ header {
     height: 100%;
   }
   
-  .modalBg {
-    width: 100%;
-    height: 100%;
-    background-color: rgba(30,30,30,0.9);
-  }
-  
-  .modalWrapper {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform:translate(-50%,-50%);
-    width: 70%;
-    max-width: 1000px;
-    padding: 10px 30px;
-    background-color: #fff;
-  }
-  
-  .closeModal {
-    position: absolute;
-    top: 0.5rem;
-    right: 1rem;
-    cursor: pointer;
+.modalBg {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(30,30,30,0.9);
   }
 
-  @media screen and (min-width: 1300px) {
-    /*　画面サイズ 1300pxから適用　*/
-    /* .modalContents .DetailThumbnail {
-      display: inline-block;
-      margin-top: none;
-    }
-  
-    .modalContents .bookDetail {
-      display: inline-block;
-      margin-top: 40px;
-      list-style: none;
-      padding-left: none;
-      line-height: 40px;
-      width: 70%;
-    }
-  
-    .modalContents .deleteButton {
-      display: block;
-      margin: 0 10px 10px auto;
-    } */
+.modalWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform:translate(-50%,-50%);
+  width: 70%;
+  max-width: 1000px;
+  padding: 10px 30px;
+  background-color: #fff;
   }
 
-  /* @media screen and (max-width: 1299px) {  */
-    /*　画面サイズ 1299px以下から適用　*/
-    .modalContents .DetailThumbnail {
-      margin: 30px auto auto auto;
+.closeModal {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  cursor: pointer;
+  }
+
+.modalContents .DetailThumbnail {
+  margin: 30px auto auto auto;
+  }
+
+.modalContents .DetailThumbnail img {
+  display: block;
+  margin: auto;
+  }
+
+.modalContents .bookDetail {
+  margin-top: 40px;
+  list-style: none;
+  line-height: 40px;
+  }
+
+.modalContents .deleteButton {
+  display: block;
+  margin: 0 10px 10px auto;
+  }
+
+/* ここから検索画面 */
+
+.searched_list {
+  text-align: center;
+  margin-bottom: 20px;
     }
 
-    .modalContents .DetailThumbnail img {
-      display: block;
-      margin: auto;
-    }
-  
-    .modalContents .bookDetail {
-      margin-top: 40px;
-      list-style: none;
-      line-height: 40px;
-    }
-  
-    .modalContents .deleteButton {
-      display: block;
-      margin: 0 10px 10px auto;
-    }
+.searched_list img {
+  width: 130px;
+  height: 180px;
+  }
 
-  /* } */
+.searched_title {
+  width: 130px;
+  height: 45px !important;
+  font-size: 15px;
+  margin: 5px auto;
+  text-align: left;
+  }
 
+.searched_authors {
+  width: 130px;
+  height: 15px !important;
+  font-size: 5px;
+  margin: 5px auto;
+  }
+
+
+/* ここからログイン・サインアップ画面 */
+
+.login-popup-heading>h4 {
+  color: #303030;
+  font-size: 30px;
+  line-height: 30px;
+  margin-bottom: 30px;
+}
+.new_reg_popup, .new_login_popup {
+  border-radius: 2px;
+  min-height: 332px;
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 0px 20px;
+}
+.login-popup-btn {
+  background: #303030;
+  border: none;
+  border-radius: 25px;
+  color: #fff;
+  display: block;
+  font-size: 18px;
+  height: 38px;
+  line-height: 28px;
+  margin: 20px auto 5px;
+  width: 150px;
+  -webkit-transition: all 700ms ease;
+  -moz-transition: all 700ms ease;
+  -ms-transition: all 700ms ease;
+  -o-transition: all 700ms ease;
+}
